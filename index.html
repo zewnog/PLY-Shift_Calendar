@@ -190,7 +190,7 @@ setInterval(function() {
 
 
 <p style="margin-top:10px; margin-bottom:15px; color:#555; font-size:12px;">
-⏱ Last Updated: October 15, 2026 • 1:17 PM
+⏱ Last Updated: October 15, 2026 • 2:25 PM
 <br>
 🔄 Updates automatically (typically within ~2 minute of changes)
 </p>
@@ -203,6 +203,13 @@ setInterval(function() {
     id="tableSearch"
     placeholder="🔍 Search all shifts..."
   >
+
+<select id="audienceFilter"> 
+<option value="All AT's (including per diem)">All AT's (including per diem)</option> 
+<option value="">All Audiences</option>
+<option value="Coordinators only">Coordinators only</option> 
+</select>
+
 
   <select id="sportFilter">
     <option value="">All Sports</option>
@@ -224,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (!table) return;
 
-  // Convert Sign Up URL into clickable link
+  //✅ Convert Sign Up URL into clickable link
   for (var i = 1; i < table.rows.length; i++) {
 
     var cell = table.rows[i].cells[6];
@@ -242,8 +249,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Build Sport Dropdown
+  // ✅✅✅✅✅✅✅✅✅Build Sport Dropdown
   var sportFilter = document.getElementById("sportFilter");
+  var audienceFilter = document.getElementById("audienceFilter");
   var sports = new Set();
 
   for (var i = 1; i < table.rows.length; i++) {
@@ -279,6 +287,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var sport =
       sportFilter.value.toLowerCase();
+var audience = 
+audienceFilter.value.toLowerCase();
 
     for (var i = 1; i < table.rows.length; i++) {
 
@@ -288,8 +298,9 @@ document.addEventListener("DOMContentLoaded", function() {
         row.textContent.toLowerCase();
 
       var rowSport =
-        row.cells[6].textContent.toLowerCase();
-
+        row.cells[3].textContent.toLowerCase();
+var rowAudience = 
+row.cells[5].textContent.toLowerCase();
       var searchMatch =
         rowText.indexOf(search) > -1;
 
@@ -297,8 +308,13 @@ document.addEventListener("DOMContentLoaded", function() {
         sport === "" ||
         rowSport === sport;
 
+var audienceMatch = 
+audience === "" || 
+rowAudience === audience;
+
+
       row.style.display =
-        (searchMatch && sportMatch)
+        (searchMatch && sportMatch && audienceMatch)
           ? ""
           : "none";
 
@@ -311,7 +327,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   sportFilter
     .addEventListener("change", filterTable);
-
+audienceFilter 
+.addEventListener("change", filterTable);
   // Sortable Columns
   var headers = table.querySelectorAll("th");
 
