@@ -190,7 +190,7 @@ setInterval(function() {
 
 
 <p style="margin-top:10px; margin-bottom:15px; color:#555; font-size:12px;">
-⏱ Last Updated: October 16, 2026 • 8:06 AM
+⏱ Last Updated: October 16, 2026 • 8:17 AM
 <br>
 🔄 Updates automatically (typically within ~2 minute of changes)
 </p>
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // ✅✅✅✅✅✅✅✅✅Build Sport Dropdown
+  // ✅Build Sport Dropdown
   var sportFilter = document.getElementById("sportFilter");
   var audienceFilter = document.getElementById("audienceFilter");
   var sports = new Set();
@@ -329,8 +329,28 @@ audienceFilter
 .addEventListener("change", filterTable);
 filterTable();
 
+//✅ Build Audience Dropdown
+ var audienceFilter = document.getElementById("audienceFilter"); 
+var audiences = new Set(); 
 
-  // Sortable Columns
+for (var i = 1; i < table.rows.length; i++) {
+    var audienceCell = table.rows[i].cells[5]; 
+   if (audienceCell) { 
+      audiences.add(audienceCell.textContent.trim()); 
+    } 
+
+} 
+Array.from(audiences) 
+   .sort() 
+   .forEach(function(audience) {
+     var option = document.createElement("option"); 
+
+     option.value = audience;
+      option.textContent = audience; 
+      audienceFilter.appendChild(option); 
+});
+
+  // ✅Sortable Columns
   var headers = table.querySelectorAll("th");
 
   headers.forEach(function(header, index) {
